@@ -1,0 +1,41 @@
+{
+  "version": "1.2",
+  "timestamp": "2026-04-17T00:00:00.000Z",
+  "user": {
+    "name": "Priyanshu",
+    "email": "priyanshu@example.com"
+  },
+  "wallets": [
+    { "name": "Priority Bank", "type": "bank", "openingBalance": 250000, "id": "w_1" },
+    { "name": "Digital Wallet", "type": "cash", "openingBalance": 15000, "id": "w_2" }
+  ],
+  "budgets": [
+    { "category": "Food & Dining", "limit": 25000, "id": "b_1", "spent": 0 },
+    { "category": "Investment", "limit": 50000, "id": "b_2", "spent": 0 }
+  ],
+  "goals": [
+    { "name": "Europe Trip 2027", "target": 500000, "current": 125000, "icon": "Plane", "id": "g_1" }
+  ],
+  "transactions": [
+    { "description": "New Year Bonus", "amount": 150000, "type": "income", "category": "Salary", "walletId": "w_1", "date": "2026-01-01", "recurrence": "none", "id": "jan_1" },
+    { "description": "Rent", "amount": -35000, "type": "expense", "category": "Housing", "walletId": "w_1", "date": "2026-01-02", "recurrence": "monthly", "id": "jan_2" },
+    { "description": "New iPhone 17 Pro", "amount": -129900, "type": "expense", "category": "Tech", "walletId": "w_1", "date": "2026-01-15", "recurrence": "none", "id": "jan_3" },
+
+    { "description": "Monthly Salary", "amount": 85000, "type": "income", "category": "Salary", "walletId": "w_1", "date": "2026-02-01", "recurrence": "monthly", "id": "feb_1" },
+    { "description": "Rent", "amount": -35000, "type": "expense", "category": "Housing", "walletId": "w_1", "date": "2026-02-02", "recurrence": "monthly", "id": "feb_2" },
+    { "description": "Ski Trip Resort", "amount": -65000, "type": "expense", "category": "Luxury & Travel", "walletId": "w_1", "date": "2026-02-14", "recurrence": "none", "id": "feb_3" },
+    { "description": "Ski Gear", "amount": -15000, "type": "expense", "category": "Shopping", "walletId": "w_1", "date": "2026-02-15", "recurrence": "none", "id": "feb_4" },
+
+    { "description": "Monthly Salary", "amount": 85000, "type": "income", "category": "Salary", "walletId": "w_1", "date": "2026-03-01", "recurrence": "monthly", "id": "mar_1" },
+    { "description": "Rent", "amount": -35000, "type": "expense", "category": "Housing", "walletId": "w_1", "date": "2026-03-02", "recurrence": "monthly", "id": "mar_2" },
+    { "description": "Freelance Gig", "amount": 25000, "type": "income", "category": "Income", "walletId": "w_1", "date": "2026-03-15", "recurrence": "none", "id": "mar_3" },
+    { "description": "Groceries", "amount": -8000, "type": "expense", "category": "Food & Dining", "walletId": "w_1", "date": "2026-03-20", "recurrence": "none", "id": "mar_4" },
+
+    { "description": "Monthly Salary", "amount": 85000, "type": "income", "category": "Salary", "walletId": "w_1", "date": "2026-04-01", "recurrence": "monthly", "id": "apr_1" },
+    { "description": "Rent", "amount": -35000, "type": "expense", "category": "Housing", "walletId": "w_1", "date": "2026-04-02", "recurrence": "monthly", "id": "apr_2" },
+    { "description": "Stock Market Gain", "amount": 12000.50, "type": "income", "category": "Income", "walletId": "w_1", "date": "2026-04-05", "recurrence": "none", "id": "apr_3" },
+    { "description": "New Laptop", "amount": -85000, "type": "expense", "category": "Tech", "walletId": "w_1", "date": "2026-04-10", "recurrence": "none", "id": "apr_4" },
+    { "description": "Gourmet Dinner", "amount": -4500.75, "type": "expense", "category": "Food & Dining", "walletId": "w_2", "date": "2026-04-15", "recurrence": "none", "id": "apr_5" },
+    { "description": "Uber Premium", "amount": -1200, "type": "expense", "category": "Transportation", "walletId": "w_1", "date": "2026-04-16", "recurrence": "none", "id": "apr_6" }
+  ]
+}

@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  /* Dark Mode Luxury & Neon Accents */
+  --color-background: #09090b;
+  --color-foreground: #fafafa;
+  --color-primary: #ffffff;
+  --color-muted: #a1a1aa;
+  --color-accent: #00f0ff;
+  --color-destructive: #ef4444; /* FIX: Added the missing red variable */
+  
+  /* Glassmorphism Variables */
+  --color-glass-bg: rgba(24, 24, 27, 0.65);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+}
+
+:root {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+@utility glass-panel {
+  background-color: var(--color-glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--color-glass-border);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.app-select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background-color: #121219;
+  color: var(--color-foreground);
+  border-radius: 0.75rem;
+  padding: 0.625rem 2.4rem 0.625rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  transition: border-color 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--color-accent) 50%),
+    linear-gradient(135deg, var(--color-accent) 50%, transparent 50%);
+  background-position:
+    calc(100% - 16px) calc(50% - 2px),
+    calc(100% - 11px) calc(50% - 2px);
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+
+.app-select:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.app-select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px rgba(0, 240, 255, 0.18);
+}
+
+.app-select option {
+  background-color: #0e0e13;
+  color: var(--color-foreground);
+}
+
+.app-select.app-select--compact {
+  padding-top: 0.45rem;
+  padding-bottom: 0.45rem;
+  border-radius: 0.65rem;
+}
