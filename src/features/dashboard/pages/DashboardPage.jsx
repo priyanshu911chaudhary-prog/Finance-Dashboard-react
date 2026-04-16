@@ -1,4 +1,5 @@
 import { lazy, Suspense, useMemo } from 'react';
+import { Loader } from '../../../shared/components/ui/Loader';
 import { useQuery } from '@tanstack/react-query';
 import { Wallet, TrendingUp, TrendingDown, Target } from 'lucide-react';
 import { StatCard } from '../components/StatCard';
@@ -76,6 +77,9 @@ export function DashboardPage() {
     };
   }, [transactions, wallets, goals]);
 
+  if (isLoading) {
+    return <Loader className="h-[60vh]" size={48} />;
+  }
   return (
     <div className="space-y-8 animate-in fade-in duration-500 overflow-x-hidden">
       <div>

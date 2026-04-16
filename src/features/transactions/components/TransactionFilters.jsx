@@ -1,4 +1,4 @@
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useOutletContext } from 'react-router-dom';
 import { FilterX } from 'lucide-react';
 import { TRANSACTION_CATEGORIES } from '../constants';
 import { CustomSelect } from '../../../shared/components/ui/CustomSelect';
@@ -9,6 +9,7 @@ const TYPES = ['All', 'income', 'expense', 'transfer'];
 export function TransactionFilters() {
   // useSearchParams is the React Router equivalent of useState, but it writes to the URL
   const [searchParams, setSearchParams] = useSearchParams();
+  const { isSidebarOpen } = useOutletContext?.() || {};
   
   const currentCategory = searchParams.get('category') || 'All';
   const currentType = searchParams.get('type') || 'All';
@@ -41,6 +42,7 @@ export function TransactionFilters() {
           onChange={(value) => updateFilter('type', value)}
           compact
           className="w-full sm:min-w-40"
+          disabled={isSidebarOpen}
         />
       </div>
       
@@ -52,6 +54,7 @@ export function TransactionFilters() {
           onChange={(value) => updateFilter('category', value)}
           compact
           className="w-full sm:min-w-56"
+          disabled={isSidebarOpen}
         />
       </div>
 

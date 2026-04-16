@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Loader } from '../../../shared/components/ui/Loader';
 import { Plus } from 'lucide-react';
 import { useGoalStore } from '../../../store/useGoalStore';
 import { GoalCard } from '../components/GoalCard';
@@ -14,6 +15,9 @@ export function GoalsPage() {
     setIsModalOpen(false);
   };
 
+  if (!goals) {
+    return <Loader className="h-[60vh]" size={48} />;
+  }
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

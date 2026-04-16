@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Loader } from '../../../shared/components/ui/Loader';
 import { useQuery } from '@tanstack/react-query';
 import { Plus } from 'lucide-react';
 import { transactionApi } from '../../../services/api/transactions';
@@ -93,7 +94,7 @@ export function WalletsPage() {
       </div>
 
       {isLoading ? (
-        <div className="h-32 glass-panel rounded-2xl animate-pulse" />
+        <Loader className="h-32" />
       ) : (
         <>
           {/* Net Worth Overview Card */}

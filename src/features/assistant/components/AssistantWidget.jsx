@@ -61,7 +61,7 @@ export function AssistantWidget() {
             onClick={() => setIsOpen(false)}
           />
 
-          <div className="relative z-10 glass-panel w-[calc(100vw-1.5rem)] sm:w-[380px] md:w-[420px] h-[70vh] sm:h-[560px] md:h-[620px] max-h-[calc(100vh-6.5rem)] rounded-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300">
+          <div className="relative z-10 bg-[#181824] w-[calc(100vw-1.5rem)] sm:w-[380px] md:w-[420px] h-[70vh] sm:h-[560px] md:h-[620px] max-h-[calc(100vh-6.5rem)] rounded-2xl flex flex-col overflow-hidden animate-in slide-in-from-bottom-5 duration-300 shadow-2xl border border-white/10">
           {/* Header */}
           <div className="bg-white/5 border-b border-white/10 p-3 sm:p-4 flex items-center justify-between">
             <div className="flex items-center gap-2">

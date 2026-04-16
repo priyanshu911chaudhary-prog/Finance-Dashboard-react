@@ -17,13 +17,13 @@ export function Sidebar({ isOpen, setIsOpen }) {
       {isOpen && (
         <button
           aria-label="Close navigation overlay"
-          className="fixed inset-0 bg-black/60 z-[99999] md:hidden"
+          className="fixed inset-0 bg-black/60 z-20 md:hidden"
           onClick={closeSidebar}
         />
       )}
 
       <aside
-        className={`fixed top-0 left-0 z-[99999] h-full w-64 border-r border-white/5 bg-background flex flex-col transform transition-transform duration-300 md:relative md:translate-x-0 ${
+        className={`fixed top-0 left-0 z-30 h-full w-64 border-r border-white/5 bg-background flex flex-col transform transition-transform duration-300 md:relative md:translate-x-0 ${
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
         }`}
       >

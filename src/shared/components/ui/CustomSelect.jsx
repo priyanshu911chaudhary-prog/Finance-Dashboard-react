@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Check, ChevronDown } from 'lucide-react';
 
 export function CustomSelect({
@@ -9,9 +10,12 @@ export function CustomSelect({
   compact = false,
   className = '',
   menuClassName = '',
+  disabled = false,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const rootRef = useRef(null);
+  const triggerRef = useRef(null);
+  const [menuStyles, setMenuStyles] = useState({});
 
   const normalizedOptions = useMemo(
     () =>
@@ -31,19 +35,41 @@ export function CustomSelect({
         setIsOpen(false);
       }
     };
-
     document.addEventListener('mousedown', onPointerDown);
     return () => document.removeEventListener('mousedown', onPointerDown);
   }, []);
+
+  // Close dropdown if disabled becomes true (e.g., sidebar opens)
+  useEffect(() => {
+    if (disabled && isOpen) {
+      setIsOpen(false);
+    }
+  }, [disabled, isOpen]);
+
+  // Position menu absolutely relative to trigger
+  useEffect(() => {
+    if (isOpen && triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setMenuStyles({
+        position: 'absolute',
+        top: rect.bottom + window.scrollY + 8, // 8px margin
+        left: rect.left + window.scrollX,
+        minWidth: rect.width,
+        zIndex: 9999,
+      });
+    }
+  }, [isOpen]);
 
   const triggerPadding = compact ? 'px-3 py-1.5 rounded-lg' : 'px-3 py-2.5 rounded-xl';
 
   return (
     <div ref={rootRef} className={`relative ${className}`}>
       <button
+        ref={triggerRef}
         type="button"
-        onClick={() => setIsOpen((open) => !open)}
-        className={`w-full bg-[#121219] border border-white/14 text-white text-sm text-left flex items-center justify-between gap-3 hover:border-white/25 focus:outline-none focus:border-accent focus:ring-2 focus:ring-cyan-400/20 transition-colors ${triggerPadding}`}
+        onClick={() => !disabled && setIsOpen((open) => !open)}
+        className={`w-full bg-[#121219] border border-white/14 text-white text-sm text-left flex items-center justify-between gap-3 hover:border-white/25 focus:outline-none focus:border-accent focus:ring-2 focus:ring-cyan-400/20 transition-colors ${triggerPadding} ${disabled ? 'opacity-60 pointer-events-none' : ''}`}
+        disabled={disabled}
       >
         <span className={`truncate ${selected ? 'text-white' : 'text-muted'}`}>
           {selected ? selected.label : placeholder}
@@ -51,9 +77,10 @@ export function CustomSelect({
         <ChevronDown className={`w-4 h-4 text-accent transition-transform ${isOpen ? 'rotate-180' : ''}`} />
       </button>
 
-      {isOpen && (
+      {isOpen && !disabled && createPortal(
         <div
-          className={`absolute left-0 right-0 mt-2 bg-black border border-white/15 rounded-xl shadow-2xl overflow-hidden z-[9999] ${menuClassName}`}
+          className={`bg-black border border-white/15 rounded-xl shadow-2xl overflow-hidden z-40 ${menuClassName}`}
+          style={menuStyles}
         >
           <ul className="max-h-72 overflow-y-auto py-1">
             {normalizedOptions.map((option) => {
@@ -77,7 +104,8 @@ export function CustomSelect({
               );
             })}
           </ul>
-        </div>
+        </div>,
+        document.body
       )}
     </div>
   );
