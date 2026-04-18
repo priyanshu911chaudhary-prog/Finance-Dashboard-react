@@ -1,7 +1,6 @@
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { CustomSelect } from '../../../shared/components/ui/CustomSelect';
 
 const goalSchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters'),
@@ -11,7 +10,7 @@ const goalSchema = z.object({
 });
 
 export function GoalForm({ onSubmit }) {
-  const { register, handleSubmit, control, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(goalSchema),
     defaultValues: { current: 0, icon: 'Home' }
   });
@@ -51,23 +50,16 @@ export function GoalForm({ onSubmit }) {
 
       <div className="space-y-1">
         <label className="text-xs text-muted font-medium">Icon Category</label>
-        <Controller
-          name="icon"
-          control={control}
-          render={({ field }) => (
-            <CustomSelect
-              value={field.value}
-              onChange={field.onChange}
-              options={[
-                { value: 'Home', label: 'Home' },
-                { value: 'Car', label: 'Car' },
-                { value: 'Plane', label: 'Travel' },
-                { value: 'Laptop', label: 'Technology' },
-                { value: 'ShieldAlert', label: 'Emergency / Savings' },
-              ]}
-            />
-          )}
-        />
+        <select
+          {...register('icon')}
+          className="app-select"
+        >
+          <option value="Home">Home</option>
+          <option value="Car">Car</option>
+          <option value="Plane">Travel</option>
+          <option value="Laptop">Technology</option>
+          <option value="ShieldAlert">Emergency / Savings</option>
+        </select>
         {errors.icon && <p className="text-xs text-destructive">{errors.icon.message}</p>}
       </div>
 

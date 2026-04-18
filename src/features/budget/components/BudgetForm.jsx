@@ -1,8 +1,7 @@
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { TRANSACTION_CATEGORIES } from '../../transactions/constants';
-import { CustomSelect } from '../../../shared/components/ui/CustomSelect';
 
 // PRO TIP: Filter out Income/Transfer so users can't budget for them
 const BUDGET_CATEGORIES = TRANSACTION_CATEGORIES.filter(
@@ -16,7 +15,7 @@ const budgetSchema = z.object({
 });
 
 export function BudgetForm({ onSubmit }) {
-  const { register, handleSubmit, control, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(budgetSchema),
     defaultValues: {
       category: BUDGET_CATEGORIES[0] // Automatically defaults to 'Food & Dining'
@@ -27,17 +26,16 @@ export function BudgetForm({ onSubmit }) {
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div className="space-y-1">
         <label className="text-xs text-muted font-medium">Budget Category</label>
-        <Controller
-          name="category"
-          control={control}
-          render={({ field }) => (
-            <CustomSelect
-              value={field.value}
-              onChange={field.onChange}
-              options={BUDGET_CATEGORIES}
-            />
-          )}
-        />
+        <select
+          {...register('category')}
+          className="app-select"
+        >
+          {BUDGET_CATEGORIES.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
         {errors.category && <p className="text-xs text-destructive">{errors.category.message}</p>}
       </div>
 

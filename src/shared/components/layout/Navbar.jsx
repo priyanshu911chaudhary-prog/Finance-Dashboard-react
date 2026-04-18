@@ -4,6 +4,7 @@ import { Bell, Search, UserCircle, LogOut, Settings, Menu } from 'lucide-react';
 // Import the new user store
 import { useUserStore } from '../../../store/useUserStore';
 import { ConfirmationDialog } from '../ui/ConfirmationDialog';
+import { resetAppData } from '../../../app/bootstrapData';
 
 export function Navbar({ onMenuClick }) {
   const [searchInput, setSearchInput] = useState('');
@@ -71,7 +72,6 @@ export function Navbar({ onMenuClick }) {
             className={`p-2 rounded-full transition-colors relative ${showNotifications ? 'bg-white/10 text-white' : 'hover:bg-white/10'}`}
           >
             <Bell className="w-5 h-5" />
-            <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-accent rounded-full"></span>
           </button>
           
           {showNotifications && (
@@ -127,7 +127,8 @@ export function Navbar({ onMenuClick }) {
         isOpen={isResetDialogOpen}
         onClose={() => setIsResetDialogOpen(false)}
         onConfirm={() => {
-          localStorage.clear();
+          resetAppData();
+          setIsResetDialogOpen(false);
           window.location.reload();
         }}
         title="Reset App"

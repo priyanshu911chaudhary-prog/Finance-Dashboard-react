@@ -71,7 +71,7 @@ export function OverviewChart({ transactions = [] }) {
             {/* FIX: Passes the raw value straight into formatCurrency with no division! */}
             <Tooltip 
               cursor={{ fill: 'rgba(255,255,255,0.05)' }}
-              contentStyle={{ backgroundColor: '#09090b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
+              contentStyle={{ backgroundColor: '#09090b', border: 'none', borderRadius: '8px' }}
               formatter={(value) => formatCurrency(value)}
             />
             

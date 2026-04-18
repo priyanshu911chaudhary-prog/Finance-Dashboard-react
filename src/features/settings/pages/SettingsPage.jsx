@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { Download, Upload, ShieldCheck, AlertCircle, FileSpreadsheet } from 'lucide-react';
+import { Download, Upload, ShieldCheck, AlertCircle, FileSpreadsheet, UserRound, Save } from 'lucide-react';
 import { useBudgetStore } from '../../../store/useBudgetStore';
 import { useWalletStore } from '../../../store/useWalletStore';
 import { useGoalStore } from '../../../store/useGoalStore';
@@ -14,6 +14,12 @@ export function SettingsPage() {
   const queryClient = useQueryClient();
   const fileInputRef = useRef(null);
   const [status, setStatus] = useState(null);
+  const { user, updateUser } = useUserStore();
+  const [profileStatus, setProfileStatus] = useState(null);
+  const [profileForm, setProfileForm] = useState({
+    name: user?.name || '',
+    email: user?.email || '',
+  });
 
   // JSON Backup
   const handleExport = () => {
@@ -82,6 +88,29 @@ export function SettingsPage() {
     setTimeout(() => setStatus(null), 3000);
   };
 
+  const handleProfileSave = (e) => {
+    e.preventDefault();
+    const name = profileForm.name.trim();
+    const email = profileForm.email.trim();
+
+    if (!name || !email) {
+      setProfileStatus('error');
+      setTimeout(() => setProfileStatus(null), 3000);
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setProfileStatus('error');
+      setTimeout(() => setProfileStatus(null), 3000);
+      return;
+    }
+
+    updateUser(name, email);
+    setProfileStatus('success');
+    setTimeout(() => setProfileStatus(null), 3000);
+  };
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div>
@@ -133,6 +162,63 @@ export function SettingsPage() {
             <FileSpreadsheet className="w-5 h-5" /> Export CSV
           </button>
         </div>
+      </div>
+
+      <div className="glass-panel p-6 rounded-2xl max-w-2xl space-y-6 mt-6">
+        <div>
+          <h3 className="text-xl font-bold text-white mb-2">Profile Personalization</h3>
+          <p className="text-sm text-muted">Update your profile details after reset or anytime.</p>
+        </div>
+
+        {profileStatus === 'success' && (
+          <div className="bg-emerald-500/10 text-emerald-500 p-4 rounded-xl flex items-center gap-2 text-sm font-medium">
+            <ShieldCheck className="w-5 h-5" /> Profile updated successfully.
+          </div>
+        )}
+
+        {profileStatus === 'error' && (
+          <div className="bg-destructive/10 text-destructive p-4 rounded-xl flex items-center gap-2 text-sm font-medium">
+            <AlertCircle className="w-5 h-5" /> Enter a valid name and email.
+          </div>
+        )}
+
+        <form onSubmit={handleProfileSave} className="space-y-4 pt-4 border-t border-white/10">
+          <div className="space-y-2">
+            <label htmlFor="profile-name" className="text-sm text-muted">Name</label>
+            <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-3">
+              <UserRound className="w-4 h-4 text-muted" />
+              <input
+                id="profile-name"
+                type="text"
+                value={profileForm.name}
+                onChange={(e) => setProfileForm((prev) => ({ ...prev, name: e.target.value }))}
+                className="w-full bg-transparent py-3 text-white outline-none"
+                placeholder="Enter your name"
+              />
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="profile-email" className="text-sm text-muted">Email</label>
+            <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-xl px-3">
+              <input
+                id="profile-email"
+                type="email"
+                value={profileForm.email}
+                onChange={(e) => setProfileForm((prev) => ({ ...prev, email: e.target.value }))}
+                className="w-full bg-transparent py-3 text-white outline-none"
+                placeholder="you@example.com"
+              />
+            </div>
+          </div>
+
+          <button
+            type="submit"
+            className="w-full sm:w-auto flex items-center justify-center gap-2 bg-accent text-background hover:opacity-90 p-3 rounded-xl transition-opacity font-medium px-6"
+          >
+            <Save className="w-4 h-4" /> Save Profile
+          </button>
+        </form>
       </div>
     </div>
   );

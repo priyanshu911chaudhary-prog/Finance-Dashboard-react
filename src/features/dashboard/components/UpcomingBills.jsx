@@ -19,7 +19,7 @@ export function UpcomingBills({ transactions, isLoading }) {
       </div>
       
       {upcomingBills.length === 0 ? (
-        <div className="flex-1 flex items-center justify-center text-muted text-sm border-2 border-dashed border-white/5 rounded-xl">
+        <div className="flex-1 flex items-center justify-center text-muted text-sm rounded-xl">
           No upcoming bills detected.
         </div>
       ) : (

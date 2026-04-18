@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
-import { Loader } from '../ui/Loader';
+import { AppBootLoader } from '../ui/Loader';
 import { Sidebar } from './NavigationSidebar';
 import { Navbar } from './Navbar';
 import { AssistantWidget } from '../../../features/assistant/components/AssistantWidget';
@@ -18,7 +18,7 @@ export function AppLayout() {
     return () => clearTimeout(timeout);
   }, []);
   if (!appLoaded) {
-    return <div className="flex items-center justify-center h-screen w-screen bg-background"><Loader size={64} /></div>;
+    return <AppBootLoader />;
   }
   return (
     <div className="flex h-screen overflow-hidden bg-background">

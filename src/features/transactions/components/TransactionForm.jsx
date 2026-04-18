@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
-import { Controller, useForm, useWatch } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { transactionSchema } from '../schemas/transactionSchema';
 import { TRANSACTION_CATEGORIES } from '../constants';
 import { useWalletStore } from '../../../store/useWalletStore';
-import { CustomSelect } from '../../../shared/components/ui/CustomSelect';
 
 export function TransactionForm({ onSubmit, isPending }) {
   const wallets = useWalletStore(state => state.wallets);
@@ -93,35 +92,33 @@ export function TransactionForm({ onSubmit, isPending }) {
               className="w-full bg-white/5 border border-white/10 rounded-lg p-2.5 text-sm text-muted focus:outline-none"
             />
           ) : (
-            <Controller
-              name="category"
-              control={control}
-              render={({ field }) => (
-                <CustomSelect
-                  value={field.value}
-                  onChange={field.onChange}
-                  options={TRANSACTION_CATEGORIES}
-                  placeholder="Select..."
-                />
-              )}
-            />
+            <select
+              {...register('category')}
+              className="app-select"
+            >
+              <option value="">Select...</option>
+              {TRANSACTION_CATEGORIES.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
           )}
           {errors.category && <p className="text-xs text-destructive">{errors.category.message}</p>}
         </div>
         <div className="space-y-1">
           <label className="text-xs text-muted font-medium">{selectedType === 'transfer' ? 'From Wallet' : 'Wallet'}</label>
-          <Controller
-            name="walletId"
-            control={control}
-            render={({ field }) => (
-              <CustomSelect
-                value={field.value}
-                onChange={field.onChange}
-                options={wallets.map((wallet) => ({ value: wallet.id, label: wallet.name }))}
-                placeholder="Select..."
-              />
-            )}
-          />
+          <select
+            {...register('walletId')}
+            className="app-select"
+          >
+            <option value="">Select...</option>
+            {wallets.map((wallet) => (
+              <option key={wallet.id} value={wallet.id}>
+                {wallet.name}
+              </option>
+            ))}
+          </select>
           {errors.walletId && <p className="text-xs text-destructive">{errors.walletId.message}</p>}
         </div>
       </div>
@@ -130,39 +127,31 @@ export function TransactionForm({ onSubmit, isPending }) {
         {selectedType === 'transfer' ? (
           <div className="space-y-1">
             <label className="text-xs text-muted font-medium">To Wallet</label>
-            <Controller
-              name="transferWalletId"
-              control={control}
-              render={({ field }) => (
-                <CustomSelect
-                  value={field.value}
-                  onChange={field.onChange}
-                  options={destinationWallets.map((wallet) => ({ value: wallet.id, label: wallet.name }))}
-                  placeholder="Select..."
-                />
-              )}
-            />
+            <select
+              {...register('transferWalletId')}
+              className="app-select"
+            >
+              <option value="">Select...</option>
+              {destinationWallets.map((wallet) => (
+                <option key={wallet.id} value={wallet.id}>
+                  {wallet.name}
+                </option>
+              ))}
+            </select>
             {errors.transferWalletId && <p className="text-xs text-destructive">{errors.transferWalletId.message}</p>}
           </div>
         ) : (
           <div className="space-y-1">
             <label className="text-xs text-muted font-medium">Recurrence</label>
-            <Controller
-              name="recurrence"
-              control={control}
-              render={({ field }) => (
-                <CustomSelect
-                  value={field.value}
-                  onChange={field.onChange}
-                  options={[
-                    { value: 'none', label: 'One-time' },
-                    { value: 'weekly', label: 'Weekly' },
-                    { value: 'monthly', label: 'Monthly' },
-                    { value: 'yearly', label: 'Yearly' },
-                  ]}
-                />
-              )}
-            />
+            <select
+              {...register('recurrence')}
+              className="app-select"
+            >
+              <option value="none">One-time</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly">Monthly</option>
+              <option value="yearly">Yearly</option>
+            </select>
           </div>
         )}
 

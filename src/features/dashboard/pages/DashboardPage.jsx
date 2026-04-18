@@ -1,5 +1,5 @@
 import { lazy, Suspense, useMemo } from 'react';
-import { Loader } from '../../../shared/components/ui/Loader';
+import { GraphLoader, PageLoader } from '../../../shared/components/ui/Loader';
 import { useQuery } from '@tanstack/react-query';
 import { Wallet, TrendingUp, TrendingDown, Target } from 'lucide-react';
 import { StatCard } from '../components/StatCard';
@@ -19,10 +19,6 @@ const UpcomingBills = lazy(() =>
 const ExpenseDonutChart = lazy(() =>
   import('../components/ExpenseDonutChart').then((module) => ({ default: module.ExpenseDonutChart }))
 );
-
-function ChartLoader({ className = 'h-[400px]' }) {
-  return <div className={`glass-panel rounded-2xl animate-pulse ${className}`} />;
-}
 
 export function DashboardPage() {
   const { data: transactions = [], isLoading } = useQuery({
@@ -78,7 +74,7 @@ export function DashboardPage() {
   }, [transactions, wallets, goals]);
 
   if (isLoading) {
-    return <Loader className="h-[60vh]" size={48} />;
+    return <PageLoader className="h-[60vh]" />;
   }
   return (
     <div className="space-y-8 animate-in fade-in duration-500 overflow-x-hidden">
@@ -102,12 +98,12 @@ export function DashboardPage() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <Suspense fallback={<ChartLoader />}>
+          <Suspense fallback={<GraphLoader />}>
             <OverviewChart transactions={transactions} />
           </Suspense>
         </div>
         <div className="h-[400px]">
-          <Suspense fallback={<ChartLoader className="h-full" />}>
+          <Suspense fallback={<GraphLoader className="h-full" />}>
             <ExpenseDonutChart transactions={transactions} isLoading={isLoading} />
           </Suspense>
         </div>
@@ -115,12 +111,12 @@ export function DashboardPage() {
       
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
          <div className="lg:col-span-1 h-[400px]">
-          <Suspense fallback={<ChartLoader className="h-full" />}>
+          <Suspense fallback={<GraphLoader className="h-full" />}>
             <UpcomingBills transactions={transactions} isLoading={isLoading} />
           </Suspense>
         </div>
         <div className="lg:col-span-2 h-[400px]">
-          <Suspense fallback={<ChartLoader className="h-full" />}>
+          <Suspense fallback={<GraphLoader className="h-full" />}>
             <RunningBalanceChart transactions={transactions} wallets={wallets} goals={goals} />
           </Suspense>
         </div>

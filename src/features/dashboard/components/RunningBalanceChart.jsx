@@ -156,7 +156,7 @@ export function RunningBalanceChart({ transactions = [], wallets = [], goals = [
               cursor={false}
               contentStyle={{
                 backgroundColor: 'rgba(9,9,11,0.95)',
-                border: '1px solid rgba(255,255,255,0.1)',
+                border: 'none',
                 borderRadius: '12px',
                 color: '#fff',
               }}

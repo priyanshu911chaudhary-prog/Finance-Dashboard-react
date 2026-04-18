@@ -87,6 +87,7 @@ export function ExpenseDonutChart({ transactions, isLoading }) {
               paddingAngle={5}
               dataKey="value"
               stroke="none"
+              activeShape={null}
             >
               {data.map((entry, index) => (
                 <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
@@ -97,11 +98,11 @@ export function ExpenseDonutChart({ transactions, isLoading }) {
               formatter={(value) => formatCurrency(value)}
               contentStyle={{ 
                 backgroundColor: '#09090b', 
-                border: '1px solid rgba(255,255,255,0.1)',
+                border: 'none',
                 borderRadius: '8px',
                 color: '#fff'
               }}
-              itemStyle={{ color: '#fff' }}
+              itemStyle={{ color: '#fff', border: 'none' }}
             />
             <Legend verticalAlign="bottom" content={renderLegendContent} />
           </PieChart>

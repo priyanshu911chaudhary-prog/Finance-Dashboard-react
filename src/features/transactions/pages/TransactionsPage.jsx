@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react';
-import { Loader } from '../../../shared/components/ui/Loader';
+import { PageLoader } from '../../../shared/components/ui/Loader';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useSearchParams } from 'react-router-dom';
 import { Plus } from 'lucide-react';
@@ -61,7 +61,7 @@ export function TransactionsPage() {
   }, [transactions, searchParams]);
 
   if (isLoading) {
-    return <Loader className="h-[60vh]" size={48} />;
+    return <PageLoader className="h-[60vh]" />;
   }
   return (
     <div className="space-y-6 animate-in fade-in duration-500">

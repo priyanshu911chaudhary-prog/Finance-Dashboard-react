@@ -1,7 +1,6 @@
-import { Controller, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { CustomSelect } from '../../../shared/components/ui/CustomSelect';
 
 const walletSchema = z.object({
   name: z.string().min(3, 'Name must be at least 3 characters').max(30, 'Name is too long'),
@@ -10,7 +9,7 @@ const walletSchema = z.object({
 });
 
 export function WalletForm({ onSubmit }) {
-  const { register, handleSubmit, control, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(walletSchema),
     defaultValues: { type: 'bank', openingBalance: 0 }
   });
@@ -29,21 +28,14 @@ export function WalletForm({ onSubmit }) {
 
       <div className="space-y-1">
         <label className="text-xs text-muted font-medium">Account Type</label>
-        <Controller
-          name="type"
-          control={control}
-          render={({ field }) => (
-            <CustomSelect
-              value={field.value}
-              onChange={field.onChange}
-              options={[
-                { value: 'bank', label: 'Bank Account' },
-                { value: 'credit', label: 'Credit Card' },
-                { value: 'cash', label: 'Cash / Digital' },
-              ]}
-            />
-          )}
-        />
+        <select
+          {...register('type')}
+          className="app-select"
+        >
+          <option value="bank">Bank Account</option>
+          <option value="credit">Credit Card</option>
+          <option value="cash">Cash / Digital</option>
+        </select>
         {errors.type && <p className="text-xs text-destructive">{errors.type.message}</p>}
       </div>
 
